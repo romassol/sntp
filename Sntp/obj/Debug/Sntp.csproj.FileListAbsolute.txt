@@ -1,0 +1,6 @@
+C:\учеба\протоколы Интернета\sntp\Sntp\Sntp\bin\Debug\Sntp.exe.config
+C:\учеба\протоколы Интернета\sntp\Sntp\Sntp\bin\Debug\Sntp.exe
+C:\учеба\протоколы Интернета\sntp\Sntp\Sntp\bin\Debug\Sntp.pdb
+C:\учеба\протоколы Интернета\sntp\Sntp\Sntp\obj\Debug\Sntp.csprojResolveAssemblyReference.cache
+C:\учеба\протоколы Интернета\sntp\Sntp\Sntp\obj\Debug\Sntp.exe
+C:\учеба\протоколы Интернета\sntp\Sntp\Sntp\obj\Debug\Sntp.pdb
