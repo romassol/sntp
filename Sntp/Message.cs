@@ -23,10 +23,25 @@ namespace Sntp
         public readonly Field KeyIdentifier;
         public readonly Field MessageDigest;
 
+        private BitArray ByteArrayToBitArray(byte[] data)
+        {
+            var result = new BitArray(data.Length*8);
+            var tmp = new bool[8];
+            for (var i = 0; i < data.Length; i++)
+            {
+                for (var j = 0; j < 8; j++)
+                    tmp[j] = (data[i] & (1 << j)) != 0;
+                Array.Reverse(tmp);
+                for (var j = 0; j < tmp.Length; j++)
+                    result[i * 8 + j] = tmp[j];
+            }
+            return result;
+        }
+
         public Message(byte[] data)
         {
             if (data.Length < 48 || data.Length > 68) throw new ArgumentException("Received data is'not SNTP message");
-            var newData = new BitArray(data);
+            var newData = ByteArrayToBitArray(data);
             LI = new Field(newData, 2, 0);
             VN = new Field(newData, 3, 2);
             Mode = new Field(newData, 3, 5);
@@ -108,7 +123,7 @@ namespace Sntp
             return allFields;
         }
 
-        public int BitsToNumber(BitArray bits)
+        private int BitsToNumber(BitArray bits)
         {
             var result = 0;
             var maxPow = bits.Length - 1;
@@ -125,13 +140,8 @@ namespace Sntp
             var result = new List<bool>();
             foreach (var valueFromField in bitArraysFromFields)
             {
-                Console.WriteLine();
                 foreach (bool b in valueFromField)
-                {
                     result.Add(b);
-                    Console.Write(b ? 1 : 0);
-                }
-                Console.WriteLine();
             }
             return new BitArray(result.ToArray());
         }
@@ -148,30 +158,11 @@ namespace Sntp
         {
             var data = new List<byte>();
             var bits = Concat(GetBitArraysFromAllField());
-            Console.WriteLine(bits.Length);
-            var n = new byte[bits.Length/8];
-            bits.CopyTo(n, 0);
             for (var i = 0; i <= bits.Length; i++)
             {
                 if (i != 0 && i % 8 == 0)
-                {
                     data.Add((byte)BitsToNumber(GetSubarray(bits, i - 8)));
-                }
             }
-            //foreach (bool b in new BitArray(data.ToArray()))
-            //{
-            //    Console.Write(b ? 1 : 0);
-            //}
-            //Console.WriteLine();
-            //foreach (bool b in bits)
-            //{
-            //    Console.Write(b ? 1 : 0);
-            //}
-            //Console.WriteLine();
-            //foreach (bool b in new BitArray(n))
-            //{
-            //    Console.Write(b ? 1 : 0);
-            //}
             return data.ToArray();
         }
     }

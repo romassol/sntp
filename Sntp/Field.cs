@@ -14,8 +14,8 @@ namespace Sntp
         public Field(BitArray data, int length, int startIndex)
         {
             Value = new BitArray(length);
-            for (var i = startIndex; i < length; i++)
-                Value[i] = data[i];
+            for (var i = 0; i < length; i++)
+                Value[i] = data[startIndex + i];
         }
 
         public Field(BitArray value)

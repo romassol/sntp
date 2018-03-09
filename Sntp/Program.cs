@@ -8,11 +8,7 @@ namespace Sntp
         public static void Main(string[] args)
         {
             var server = new Server();
-            while (true)
-            {
-                server.Start();
-            }
-            //server.Start();
+            server.Start();
         }
     }
 }
